@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<nav th:replace="fragments :: nav"></nav>
+<body>
+<h1>Add Gift Received</h1>
+<form method="post" style="max-width:600px;" th:object="${addGiftReceivedForm}">
+    <div>
+    <label th:for="type">Friends</label>
+    <select name="friend">
+        <option
+                th:if="${friend.user.id == friend.id}"
+                th:each="friend : ${user.friends}"
+                th:text="${friend.firstName}"
+                th:value="${friend.id}"
+                selected="selected"></option>
+        <option th:unless="${friend.user.id == friend.id}"
+                th:each="friend : ${user.friends}"
+                th:text="${friend.firstName}"
+                th:value="${friend.id}"></option>
+    </select>
+
+    </div>
+    <div class="form-group">
+        <label th:for="description">Description</label>
+        <input class = "form-control" th:field="*{description}" th:value="${addGiftReceivedForm.description}" />
+        <span th:errors="*{description}" class="error"></span>
+    </div>
+    <br/>
+    <div class="form-group">
+        <label th:for="dateReceived">Date Received</label>
+        <input type="date" class = "form-control" th:field="*{dateReceived}" th:value="${addGiftReceivedForm.dateReceived}" />
+        <span th:errors="*{dateReceived}" class="error"></span>
+    </div>
+    <br/>
+    <div class="form-group">
+        <label th:for="price">Price</label>
+        <input class = "form-control" th:field="*{price}" th:value="${addGiftReceivedForm.price}" />
+        <span th:errors="*{price}" class="error"></span>
+    </div>
+    <br/>
+    <input type="submit" value="Add a new gift"/>
+</form>
+
+</body>
+</html>

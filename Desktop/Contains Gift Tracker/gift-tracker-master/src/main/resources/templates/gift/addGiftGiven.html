@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<nav th:replace="fragments :: nav"></nav>
+<body>
+    <h1>Add Gift Given</h1>
+
+
+
+    <form method="post" style="max-width:600px;" th:object="${addGiftGivenForm}">
+        <div>
+            <label th:for="type">Friends</label>
+            <select name="friendId">
+                <option
+                        th:if="${friend.user.id == friend.id}"
+                        th:each="friend : ${user.friends}"
+                        th:text="${friend.firstName}"
+                        th:value="${friend.id}"
+                        selected="selected"></option>
+                <option th:unless="${friend.user.id == friend.id}"
+                        th:each="friend : ${user.friends}"
+                        th:text="${friend.firstName}"
+                        th:value="${friend.id}"></option>
+            </select>
+        </div>
+        <!--<div class="form-group">
+            <label th:for="friend">What is the recipient's first name?</label>
+            <input class="form-control" th:field="*{friend}" th:value="${addGiftGivenForm.lastName}" />
+            <span th:errors="*{friend}" class="error"></span>
+        </div>-->
+        <div class="form-group">
+            <label th:for="description">Description</label>
+            <input class = "form-control" th:field="*{description}" th:value="${addGiftGivenForm.description}" />
+            <span th:errors="*{description}" class="error"></span>
+        </div>
+        <br/>
+        <div class="form-group">
+            <label th:for="dateBought">Date Bought</label>
+            <input type="date" class = "form-control" th:field="*{dateBought}" th:value="${addGiftGivenForm.dateBought}" />
+            <span th:errors="*{dateBought}" class="error"></span>
+        </div>
+        <br/>
+        <div class="form-group">
+            <label th:for="price">Price</label>
+            <input class = "form-control" th:field="*{price}" th:value="${addGiftGivenForm.price}" />
+            <span th:errors="*{price}" class="error"></span>
+        </div>
+        <br/>
+        <div class="form-group">
+            <label th:for="dateGiven">Date Given</label>
+            <input type="date" class = "form-control" th:field="*{dateGiven}" th:value="${addGiftGivenForm.dateGiven}" />
+            <span th:errors="*{dateGiven}" class="error"></span>
+        </div>
+        <br/>
+        <div class="form-group">
+            <label th:for="location">If you haven't given the gift yet, where did you put it?</label>
+            <input class = "form-control" th:field="*{location}" th:value="${addGiftGivenForm.location}" />
+            <span th:errors="*{location}" class="error"></span>
+        </div>
+        <input type="submit" value="Add a new gift"/>
+    </form>
+
+</body>
+</html>

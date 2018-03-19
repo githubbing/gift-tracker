@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://java.sun.com/xml/ns/persistence/orm">
+<head th:replace="fragments :: head"></head>
+<nav th:replace="fragments :: nav"></nav>
+<title>Homepage</title>
+<body>
+
+<h2 th:unless="${user.friends} and ${user.friends.size()}">Sorry, you have no friends.  You must add a friend or family member to begin.</h2>
+
+<table th:if="${user.friends} and ${user.friends.size()}" class="table">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Birth Day</th>
+        <th>Address</th>
+        <th>Relationship to You</th>
+        <th>Email</th>
+    </tr>
+
+    <tr th:each="friend : ${user.friends}">
+        <td th:text="${friend.firstName}"></td>
+        <td th:text="${friend.lastName}"></td>
+        <td th:text="${friend.birthday}"></td>
+        <td th:text="${friend.address}"></td>
+        <td th:text="${friend.relationship}"></td>
+        <td th:text="${friend.email}"></td>
+    </tr>
+</table>
+</body>
+</html>

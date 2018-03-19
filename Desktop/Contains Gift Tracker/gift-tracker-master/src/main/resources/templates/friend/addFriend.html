@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<nav th:replace="fragments :: nav"></nav>
+<body>
+<h1>Add a friend</h1>
+<form method="post" style="max-width:600px;" th:object="${addFriendForm}">
+    <div class="form-group">
+        <label th:for="firstName">What is your friend's first name?</label>
+        <input class="form-control" th:field="*{firstName}" th:value="${addFriendForm.firstName}" />
+        <span th:errors="*{firstName}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="lastName">What is your friend's last name?</label>
+        <input class="form-control" th:field="*{lastName}" th:value="${addFriendForm.lastName}" />
+        <span th:errors="*{lastName}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="relationship">What is this person's relationship to you?</label>
+        <input class="form-control" th:field="*{relationship}" th:value="${addFriendForm.relationship}" />
+        <span th:errors="*{relationship}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="address">What is this person's address?</label>
+        <input class="form-control" th:field="*{address}" th:value="${addFriendForm.address}" />
+        <span th:errors="*{address}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="birthday">What is this person's birthday?</label>
+        <input type="date" class="form-control" th:field="*{birthday}" th:value="${addFriendForm.birthday}" />
+        <span th:errors="*{birthday}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="email">What is this person's email address?</label>
+        <input type="email" class="form-control" th:field="*{email}" th:value="${addFriendForm.email}" />
+        <span th:errors="*{email}" class="error"></span>
+    </div>
+    <input type="submit" value="Add a new friend"/>
+</form>
+
+
+</body>
+</html>
