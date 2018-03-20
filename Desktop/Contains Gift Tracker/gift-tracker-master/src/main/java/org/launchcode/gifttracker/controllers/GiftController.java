@@ -63,8 +63,6 @@ public class GiftController {
             Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-
-
         if (errors.hasErrors()) {
             model.addAttribute("addGiftGivenForm", giftGivenForm);
             return "gift/addGiftGiven";

@@ -19,6 +19,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.Console;
 import java.net.Authenticator;
 import java.util.Collection;
 
@@ -64,20 +65,24 @@ public class FriendController {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "friend/view/(friendId}", method = RequestMethod.GET)
-    public String viewGiftByFriend(@ModelAttribute @Valid Errors errors, Model model, @PathVariable int friendId){
+    @RequestMapping(path = "friend/view/{friendId}", method = RequestMethod.GET)
+    public String viewFriend(@ModelAttribute
+                             @PathVariable int friendId,
+                             Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
+        Friend viewFriend = friendRepository.findOne(friendId);
 
-        Friend friend = friendRepository.findOne(friendId);
-        if(friend.getUser().getId() == friendId ){
-            friend.getGiftsGiven();
-            friend.getGiftsReceived();
-            model.addAttribute(friend);
-            return "redirect:friend/view/" + friendId;
-        }
-        else return "redirect:home";
+        model.addAttribute("user", user);
+        model.addAttribute("friend", viewFriend);
+        model.addAttribute("title", viewFriend.getLastName());
+
+        System.out.println(viewFriend.getGiftsReceived());
+        System.out.println(viewFriend.getGiftsGiven());
+
+      /*  if (user != null && user.getId() == friendId){
+            model.addAttribute("editFriend", friendId);
+        }*/
+        return "friend/viewGifts";
     }
-
-
 }

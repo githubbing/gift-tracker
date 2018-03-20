@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<nav th:replace="fragments :: nav"></nav>
+<title th:text="@{title}"></title>
+<body>
+<!--<h2 th:if="${giftsGiven} and ${giftsGiven.size()}">You don't have any gifts that you've given to this person.</h2>
+<h2 th:if="${giftsReceived} and ${giftsReceived.size()}">You don't have any gifts that you've received from this person.</h2>-->
+    <table>
+        <tr>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Date Bought</th>
+        </tr>
+        <tr th:each="gift : ${friend.giftsReceived}">
+            <td th:text="${gift.description}"></td>
+            <td th:text="${gift.price}"></td>
+            <td th:text="${gift.dateReceived}"></td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -19,7 +19,7 @@
 
     <tr th:each="friend : ${user.friends}">
         <td th:text="${friend.firstName}"></td>
-        <td th:text="${friend.lastName}"></td>
+        <td><a th:href="@{|/friend/view/${friend.id}|}" th:text="${friend.lastName}" ></a></td>
         <td th:text="${friend.birthday}"></td>
         <td th:text="${friend.address}"></td>
         <td th:text="${friend.relationship}"></td>

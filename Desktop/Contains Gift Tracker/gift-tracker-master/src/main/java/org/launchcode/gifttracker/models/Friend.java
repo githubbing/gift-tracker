@@ -2,6 +2,7 @@ package org.launchcode.gifttracker.models;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.launchcode.gifttracker.models.forms.AddFriendForm;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 import javax.persistence.*;
@@ -25,6 +26,7 @@ public class Friend {
 
     private String address;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
 
     private String relationship;

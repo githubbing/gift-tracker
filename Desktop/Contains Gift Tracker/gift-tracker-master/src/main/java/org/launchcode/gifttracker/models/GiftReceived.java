@@ -38,6 +38,9 @@ public class GiftReceived {
     private Friend friend;
 
     //constructor
+
+    public GiftReceived(){}
+
     public GiftReceived(User user, AddGiftReceivedForm addGiftReceivedForm){
         setDescription(addGiftReceivedForm.getDescription());
         setUser(user);
