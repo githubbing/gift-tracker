@@ -1,5 +1,6 @@
 package org.launchcode.gifttracker.models;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.launchcode.gifttracker.models.forms.AddFriendForm;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,14 +34,14 @@ public class Friend {
 
     private String email;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<GiftGiven> giftsGiven = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<GiftReceived> giftsReceived = new ArrayList<>();
 
     //constructor
@@ -110,6 +111,15 @@ public class Friend {
 
     public List<GiftReceived> getGiftsReceived() {
         return giftsReceived;
+    }
+
+
+    public void addGiftGiven(GiftGiven giftGiven){
+        giftsGiven.add(giftGiven);
+    }
+
+    public void addGiftReceived(GiftReceived giftReceived){
+        giftsReceived.add(giftReceived);
     }
 
     public void setGiftsReceived(List<GiftReceived> giftsReceived) {

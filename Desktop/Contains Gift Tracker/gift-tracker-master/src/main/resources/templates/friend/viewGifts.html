@@ -1,16 +1,89 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head"></head>
-<nav th:replace="fragments :: nav"></nav>
+<head>
+<style type="text/css">
+  html { height: 100% }
+  body { height: 100%; margin: 0; padding: 0 }
+  #map-canvas { height: 100% }
+</style>
+    <h4>
+        <nav>
+            <a href="/">Home</a> |
+            <a href="/addFriend">Add Friend</a> |
+            <a href="/addGiftReceived">Add Gift Received</a> |
+            <a href="/addGiftGiven">Add Gift Given</a>
+        </nav>
+    </h4>
+
+<script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+
+  var geocoder;
+  var map;
+
+  var address = /*[[${friendAddress}]]*/ 'friendAddress';
+
+  function initialize() {
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(-34.397, 150.644);
+    var myOptions = {
+      zoom: 17,
+      center: latlng,
+    mapTypeControl: true,
+    mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
+    navigationControl: true,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    if (geocoder) {
+      geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+          map.setCenter(results[0].geometry.location);
+
+            var infowindow = new google.maps.InfoWindow(
+                { content: '<b>'+address+'</b>',
+                  size: new google.maps.Size(150,50)
+                });
+
+            var marker = new google.maps.Marker({
+                position: results[0].geometry.location,
+                map: map,
+                title:address
+            });
+            google.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(map,marker);
+            });
+
+          } else {
+            alert("No results found");
+          }
+        } else {
+          alert("Geocode was not successful for the following reason: " + status);
+        }
+      });
+    }
+  }
+
+  /*]]>*/
+</script>
+<script async="async" defer="defer" th:src="${googleMapAPI}"
+        type="text/javascript"></script>
+</head>
 <title th:text="@{title}"></title>
-<body>
+<body style="margin:0px; padding:0px;" onload="initialize()">
+<h1 th:inline="text">[[${friend.firstName}]] [[${friend.lastName}]]</h1>
+<div id="map_canvas" style="width:25%; height:25%"></div>
 <!--<h2 th:if="${giftsGiven} and ${giftsGiven.size()}">You don't have any gifts that you've given to this person.</h2>
 <h2 th:if="${giftsReceived} and ${giftsReceived.size()}">You don't have any gifts that you've received from this person.</h2>-->
-    <table>
+
+<hr />
+<h4>Gifts Received</h4>
+<table>
         <tr>
             <th>Description</th>
             <th>Price</th>
-            <th>Date Bought</th>
+            <th>Date Received</th>
         </tr>
         <tr th:each="gift : ${friend.giftsReceived}">
             <td th:text="${gift.description}"></td>
@@ -18,5 +91,20 @@
             <td th:text="${gift.dateReceived}"></td>
         </tr>
     </table>
+
+<hr />
+<h4>Gifts Given</h4>
+<table>
+    <tr>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Date Given</th>
+    </tr>
+    <tr th:each="gift : ${friend.giftsGiven}">
+        <td th:text="${gift.description}"></td>
+        <td th:text="${gift.price}"></td>
+        <td th:text="${gift.dateGiven}"></td>
+    </tr>
+</table>
 </body>
 </html>

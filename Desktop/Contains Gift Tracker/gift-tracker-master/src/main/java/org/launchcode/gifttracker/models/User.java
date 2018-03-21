@@ -121,6 +121,10 @@ public class User {
         friends.add(friend);
     }
 
+    public void removeFriend(Friend friend){
+        friends.remove(friend);
+    }
+
     public void addGiftReceived(GiftReceived giftReceived){giftsReceived.add(giftReceived);}
 
 }

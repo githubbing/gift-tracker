@@ -24,7 +24,7 @@ import java.net.Authenticator;
 import java.util.Collection;
 
 @Controller
-@RequestMapping("/")
+//@RequestMapping("/friend")
 public class FriendController {
 
     @Autowired
@@ -73,16 +73,30 @@ public class FriendController {
         User user = userService.findUserByEmail(auth.getName());
         Friend viewFriend = friendRepository.findOne(friendId);
 
+        model.addAttribute("friendAddress",viewFriend.getAddress());
         model.addAttribute("user", user);
         model.addAttribute("friend", viewFriend);
         model.addAttribute("title", viewFriend.getLastName());
 
-        System.out.println(viewFriend.getGiftsReceived());
-        System.out.println(viewFriend.getGiftsGiven());
-
-      /*  if (user != null && user.getId() == friendId){
-            model.addAttribute("editFriend", friendId);
-        }*/
         return "friend/viewGifts";
+    }
+
+
+    //remove friend
+    @RequestMapping(value = "remove/{friendId}", method = RequestMethod.GET)
+    public String removeFriend(@ModelAttribute @PathVariable int friendId){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        Friend deleteFriend = friendRepository.findOne(friendId);
+
+        if(deleteFriend != null){
+            System.out.println("Deleting Friend: " + deleteFriend.getFirstName() +  " " + deleteFriend.getLastName());
+            user.removeFriend(deleteFriend);
+            userRepository.save(user);
+        }else{
+            System.out.println("Friend with Id of " + friendId + " not found");
+        }
+        return "redirect:/";
+
     }
 }

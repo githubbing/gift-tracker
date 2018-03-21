@@ -30,7 +30,6 @@ public class HomeController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
-        System.out.println("User: " + user.getEmail());
         model.addAttribute(user);
             return "home";
         }

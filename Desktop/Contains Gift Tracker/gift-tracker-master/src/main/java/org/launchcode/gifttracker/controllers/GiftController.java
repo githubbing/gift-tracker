@@ -8,6 +8,7 @@ import org.launchcode.gifttracker.models.User;
 import org.launchcode.gifttracker.models.data.GiftGivenDao;
 import org.launchcode.gifttracker.models.forms.AddGiftGivenForm;
 import org.launchcode.gifttracker.models.forms.AddGiftReceivedForm;
+import org.launchcode.gifttracker.models.repository.FriendRepository;
 import org.launchcode.gifttracker.models.repository.GiftGivenRepository;
 import org.launchcode.gifttracker.models.repository.GiftReceivedRepository;
 import org.launchcode.gifttracker.models.repository.UserRepository;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/")
+//@RequestMapping("/gift")
 public class GiftController {
 
     @Autowired
@@ -41,6 +42,9 @@ public class GiftController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    private FriendRepository friendRepository;
 
     @RequestMapping(value = "addGiftGiven", method = RequestMethod.GET )
     public String displayAddGiftGivenForm(Model model){
@@ -68,16 +72,24 @@ public class GiftController {
             return "gift/addGiftGiven";
         }
 
+
+
         GiftGiven newGiftGiven = new GiftGiven(
                 user,
                 giftGivenForm
         );
-        newGiftGiven.setUser(user);
+
+        Friend friend = giftGivenForm.getFriend();
+
+        System.out.println("fname: " +friend.getFirstName());
+
         giftGivenRepository.save(newGiftGiven);
 
         System.out.println("gift given id: " + newGiftGiven.getId());
         user.addGiftGiven(newGiftGiven);
         userRepository.save(user);
+        friend.addGiftGiven(newGiftGiven);
+        friendRepository.save(friend);
         return "redirect:/";
     }
 
@@ -113,11 +125,14 @@ public class GiftController {
                 user,
                 addGiftReceivedForm
         );
-        newGiftReceived.setUser(user);
+        Friend friend = addGiftReceivedForm.getFriend();
+
         giftReceivedRepository.save(newGiftReceived);
 
         user.addGiftReceived(newGiftReceived);
         userRepository.save(user);
+        friend.addGiftReceived(newGiftReceived);
+        friendRepository.save(friend);
 
         return "redirect:/";
     }

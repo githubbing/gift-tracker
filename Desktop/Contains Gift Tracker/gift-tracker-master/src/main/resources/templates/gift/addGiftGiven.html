@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-<nav th:replace="fragments :: nav"></nav>
+<nav th:replace="fragments :: h4"></nav>
 <body>
     <h1>Add Gift Given</h1>
 
@@ -10,7 +10,7 @@
     <form method="post" style="max-width:600px;" th:object="${addGiftGivenForm}">
         <div>
             <label th:for="type">Friends</label>
-            <select name="friendId">
+            <select name="friend">
                 <option
                         th:if="${friend.user.id == friend.id}"
                         th:each="friend : ${user.friends}"

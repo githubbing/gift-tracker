@@ -30,11 +30,11 @@ public class GiftReceived {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateReceived;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Friend friend;
 
     //constructor

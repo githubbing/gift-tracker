@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://java.sun.com/xml/ns/persistence/orm">
 <head th:replace="fragments :: head"></head>
-<nav th:replace="fragments :: nav"></nav>
+<nav th:replace="fragments :: h4"></nav>
 <title>Homepage</title>
 <body>
 
@@ -15,6 +15,7 @@
         <th>Address</th>
         <th>Relationship to You</th>
         <th>Email</th>
+        <th>&nbsp;</th>
     </tr>
 
     <tr th:each="friend : ${user.friends}">
@@ -24,6 +25,7 @@
         <td th:text="${friend.address}"></td>
         <td th:text="${friend.relationship}"></td>
         <td th:text="${friend.email}"></td>
+        <td><a th:href="@{|/remove/${friend.id}|}">Delete Friend</a></td>
     </tr>
 </table>
 </body>

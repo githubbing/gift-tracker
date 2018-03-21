@@ -32,11 +32,11 @@ public class GiftGiven {
 
     private String location;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Friend friend;
 
     //constructor
@@ -112,4 +112,5 @@ public class GiftGiven {
     public void setFriend(Friend friend) {
         this.friend = friend;
     }
+
 }
